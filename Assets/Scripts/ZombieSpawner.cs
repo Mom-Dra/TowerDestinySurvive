@@ -5,7 +5,10 @@ using UnityEngine;
 public class ZombieSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject zombiePrefab;
+    private GameObject normalZombiePrefab;
+
+    [SerializeField]
+    private GameObject slowZombiePrefab;
 
     [SerializeField]
     private Vector3 pos;
@@ -14,7 +17,11 @@ public class ZombieSpawner : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Instantiate(zombiePrefab, pos, Quaternion.identity);
+            Instantiate(normalZombiePrefab, pos, Quaternion.identity);
+        }
+        else if(Input.GetKeyDown(KeyCode.S))
+        {
+            Instantiate(slowZombiePrefab, pos, Quaternion.identity);
         }
     }
 }

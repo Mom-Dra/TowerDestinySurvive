@@ -24,20 +24,20 @@ public class Zombie : MonoBehaviour
     private Rigidbody2D rigid;
 
     [SerializeField]
-    private BoxCollider2D zombieCollider;
+    private CapsuleCollider2D zombieCollider;
 
     public Animator Animator => animator;
 
     public Rigidbody2D Rigid => rigid;
 
-    public BoxCollider2D Collider => zombieCollider;
+    public CapsuleCollider2D Collider => zombieCollider;
 
     [Header("value")]
     [SerializeField]
     private float runSpeed;
 
     [SerializeField]
-    private float climbSpeed;
+    private Vector2 climbSpeed;
 
     [SerializeField]
     private float rayDistance;
@@ -46,13 +46,13 @@ public class Zombie : MonoBehaviour
 
     public float RayDistance => rayDistance;
 
-    public float ClimbSpeed => climbSpeed;
+    public Vector2 ClimbSpeed => climbSpeed;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
-        zombieCollider = GetComponent<BoxCollider2D>();
+        zombieCollider = GetComponent<CapsuleCollider2D>();
     }
 
     private void Update()

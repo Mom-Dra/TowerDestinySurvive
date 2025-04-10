@@ -8,6 +8,7 @@ public class RunState : IZombieState
     {
         zombie.ZombieState = ZombieState.Run;
         zombie.Animator.SetBool("IsIdle", true);
+        zombie.Rigid.mass = 10f;
     }
 
     public void Exit(Zombie zombie)
@@ -17,20 +18,12 @@ public class RunState : IZombieState
 
     public void Update(Zombie zombie)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Jump!!");
-
-            zombie.Rigid.velocity = new Vector2(zombie.Rigid.velocity.x, zombie.ClimbSpeed);
-        }
+        
     }
 
     public void FixedUpdate(Zombie zombie)
     {
-        //zombie.Rigid.MovePosition(zombie.Rigid.position + Vector2.left * zombie.RunSpeed * Time.fixedDeltaTime);
         zombie.Rigid.velocity = new Vector2(-zombie.RunSpeed, zombie.Rigid.velocity.y);
-
-        Debug.Log($"{zombie.Rigid.velocity}");
 
         RaycastHit2D raycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, zombie.Collider.size.y / 2f), Vector2.left, zombie.RayDistance);
         Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, zombie.Collider.size.y / 2f), Vector2.left * zombie.RayDistance, Color.red);
@@ -39,14 +32,17 @@ public class RunState : IZombieState
         {
             if (raycastHit2D.transform.gameObject.layer == zombie.gameObject.layer)
             {
-                zombie.Rigid.velocity = new Vector2(zombie.Rigid.velocity.x, zombie.ClimbSpeed);
-                zombie.ChangeState(Zombie.CLIMBSTATE);
+                if(raycastHit2D.transform.TryGetComponent<Zombie>(out Zombie hittedZombie))
+                {
+                    if (hittedZombie.RunSpeed <= zombie.RunSpeed)
+                        zombie.ChangeState(Zombie.CLIMBSTATE);
+                }
             }
             else if (raycastHit2D.transform.gameObject.layer == LayerMask.NameToLayer("Box"))
             {
                 zombie.ChangeState(Zombie.ATTACKSTATE);
             }
         }
-        else Debug.Log("collider null");
+        else Debug.Log("collider is null");
     }
 }

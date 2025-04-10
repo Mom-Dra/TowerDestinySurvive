@@ -22,6 +22,16 @@ public class AttackState : IZombieState
 
     public void FixedUpdate(Zombie zombie)
     {
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, zombie.Collider.size.y / 2f), Vector2.left, zombie.RayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, zombie.Collider.size.y / 2f), Vector2.left * zombie.RayDistance, Color.red);
 
+        if (raycastHit2D.collider != null)
+        {
+            if (raycastHit2D.transform.gameObject.layer != LayerMask.NameToLayer("Box"))
+            {
+                zombie.ChangeState(Zombie.RUNSTATE);
+            }
+        }
+        else zombie.ChangeState(Zombie.RUNSTATE);
     }
 }

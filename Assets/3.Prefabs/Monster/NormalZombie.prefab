@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1174570720321624928}
   - component: {fileID: 7016750400611631704}
   - component: {fileID: 4745615118571085478}
-  - component: {fileID: 3733914456847996667}
   - component: {fileID: 5306584281657193461}
+  - component: {fileID: 9171027234890769963}
   m_Layer: 7
-  m_Name: ZombieMelee
+  m_Name: NormalZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -84,8 +84,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &3733914456847996667
-BoxCollider2D:
+--- !u!114 &5306584281657193461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319310827380095937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd9518ace3b51b4080069129aa0897b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zombieState: 0
+  animator: {fileID: 0}
+  rigid: {fileID: 0}
+  zombieCollider: {fileID: 0}
+  runSpeed: 2
+  climbSpeed: {x: 3, y: 5}
+  rayDistance: 0.2
+--- !u!70 &9171027234890769963
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,37 +136,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.2, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.7, y: 1.15}
-  m_EdgeRadius: 0
---- !u!114 &5306584281657193461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319310827380095937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cd9518ace3b51b4080069129aa0897b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zombieState: 0
-  animator: {fileID: 0}
-  rigid: {fileID: 0}
-  zombieCollider: {fileID: 0}
-  runSpeed: 1
-  climbSpeed: 1
-  rayDistance: 0.2
+  m_Direction: 0
 --- !u!1 &2094693183665648150
 GameObject:
   m_ObjectHideFlags: 0
