@@ -22,16 +22,31 @@ public class AttackState : IZombieState
 
     public void FixedUpdate(Zombie zombie)
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, zombie.Collider.size.y / 2f), Vector2.left, zombie.RayDistance);
-        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, zombie.Collider.size.y / 2f), Vector2.left * zombie.RayDistance, Color.red);
+        RaycastHit2D forwardRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.RayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.RayDistance, Color.red);
 
-        if (raycastHit2D.collider != null)
+        if (forwardRaycastHit2D.collider != null)
         {
-            if (raycastHit2D.transform.gameObject.layer != LayerMask.NameToLayer("Box"))
+            if (forwardRaycastHit2D.transform.gameObject.layer != LayerMask.NameToLayer("Box"))
             {
                 zombie.ChangeState(Zombie.RUNSTATE);
             }
         }
         else zombie.ChangeState(Zombie.RUNSTATE);
+
+        RaycastHit2D upRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(0f, zombie.Collider.size.y), Vector2.up, zombie.UpRayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(0f, zombie.Collider.size.y), Vector2.up * zombie.UpRayDistance, Color.red);
+
+        if(upRaycastHit2D.collider != null)
+        {
+            if(upRaycastHit2D.transform.gameObject.layer == zombie.gameObject.layer)
+            {
+                //zombie.Rigid.velocity = new Vector2(zombie.RunSpeed, zombie.Rigid.velocity.y);
+                //zombie.Rigid.AddForce(Vector2.right * 300f, ForceMode2D.Impulse);
+
+                //if (zombie.IsGround)
+                    zombie.ChangeState(Zombie.RUNBACKSTATE);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Zombie : MonoBehaviour
@@ -8,6 +9,7 @@ public class Zombie : MonoBehaviour
     public static readonly IZombieState RUNSTATE = new RunState();
     public static readonly IZombieState ATTACKSTATE = new AttackState();
     public static readonly IZombieState CLIMBSTATE = new ClimbState();
+    public static readonly IZombieState RUNBACKSTATE = new RunBack();
     public static readonly IZombieState DIESTATE = new DieState();
     private IZombieState currState = RUNSTATE;
 
@@ -42,17 +44,49 @@ public class Zombie : MonoBehaviour
     [SerializeField]
     private float rayDistance;
 
+    [SerializeField]
+    private float upRayDistance;
+
+    [SerializeField]
+    private float downRayDistance;
+
+    [SerializeField]
+    private float climbMass;
+
+    [SerializeField]
+    private float runBackMass;
+
+    [SerializeField]
+    private bool isGround;
+
     public float RunSpeed => runSpeed;
 
     public float RayDistance => rayDistance;
 
+    public float UpRayDistance => upRayDistance;
+
     public Vector2 ClimbSpeed => climbSpeed;
+
+    public float ClimbMass => climbMass;
+
+    public float RunBackMass => runBackMass;
+
+    public bool IsGround => isGround;
+
+    public float RunBackTargetPosX { get; set; }
+
+    public Vector2 Size { get; private set; }
+
+    public float OriginalMass { get; private set; }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         zombieCollider = GetComponent<CapsuleCollider2D>();
+
+        Size = zombieCollider.size;
+        OriginalMass = rigid.mass;
     }
 
     private void Update()
@@ -67,7 +101,28 @@ public class Zombie : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckGround();
+
         currState.FixedUpdate(this);
+    }
+
+    private void CheckGround()
+    {
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(rigid.position + new Vector2(-0.2f, 0f), Vector2.down, downRayDistance, 1 << LayerMask.NameToLayer("Ground1"));
+        Debug.DrawRay(rigid.position + new Vector2(-0.2f, 0f), Vector2.down * downRayDistance, Color.red);
+
+        if (raycastHit2D.collider != null)
+        {
+            Debug.Log($"down Ray: {raycastHit2D.transform.name}");
+
+            isGround = true;
+            //if (raycastHit2D.transform.gameObject.layer == LayerMask.NameToLayer("Ground1"))
+            //{
+            //    IsGround = true;
+            //}
+            //else IsGround = false;
+        }
+        else isGround = false;
     }
 
     public void OnAttack()

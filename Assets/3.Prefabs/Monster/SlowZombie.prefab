@@ -101,8 +101,13 @@ MonoBehaviour:
   rigid: {fileID: 0}
   zombieCollider: {fileID: 0}
   runSpeed: 1
-  climbSpeed: {x: 1, y: 5}
+  climbSpeed: {x: 1, y: 2}
   rayDistance: 0.2
+  upRayDistance: 0.4
+  downRayDistance: 0.8
+  climbMass: 1
+  runBackMass: 1000
+  isGround: 0
 --- !u!70 &9171027234890769963
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

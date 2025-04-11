@@ -7,5 +7,6 @@ public enum ZombieState
     Run,
     Climb,
     Attack,
+    RunBack,
     Die
 }
