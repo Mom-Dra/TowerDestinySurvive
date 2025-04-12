@@ -35,41 +35,14 @@ public class Zombie : MonoBehaviour
     public CapsuleCollider2D Collider => zombieCollider;
 
     [Header("value")]
-    [SerializeField]
-    private float runSpeed;
 
     [SerializeField]
-    private Vector2 climbSpeed;
+    private ZombieData zombieData;
 
-    [SerializeField]
-    private float rayDistance;
-
-    [SerializeField]
-    private float upRayDistance;
-
-    [SerializeField]
-    private float downRayDistance;
-
-    [SerializeField]
-    private float climbMass;
-
-    [SerializeField]
-    private float runBackMass;
+    public ZombieData ZombieData => zombieData;
 
     [SerializeField]
     private bool isGround;
-
-    public float RunSpeed => runSpeed;
-
-    public float RayDistance => rayDistance;
-
-    public float UpRayDistance => upRayDistance;
-
-    public Vector2 ClimbSpeed => climbSpeed;
-
-    public float ClimbMass => climbMass;
-
-    public float RunBackMass => runBackMass;
 
     public bool IsGround => isGround;
 
@@ -108,8 +81,8 @@ public class Zombie : MonoBehaviour
 
     private void CheckGround()
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(rigid.position + new Vector2(-0.2f, 0f), Vector2.down, downRayDistance, 1 << LayerMask.NameToLayer("Ground1"));
-        Debug.DrawRay(rigid.position + new Vector2(-0.2f, 0f), Vector2.down * downRayDistance, Color.red);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(rigid.position + new Vector2(-0.2f, 0f), Vector2.down, zombieData.DownRayDistance, 1 << LayerMask.NameToLayer("Ground1"));
+        Debug.DrawRay(rigid.position + new Vector2(-0.2f, 0f), Vector2.down * zombieData.DownRayDistance, Color.red);
 
         if (raycastHit2D.collider != null)
         {

@@ -22,8 +22,8 @@ public class AttackState : IZombieState
 
     public void FixedUpdate(Zombie zombie)
     {
-        RaycastHit2D forwardRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.RayDistance);
-        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.RayDistance, Color.red);
+        RaycastHit2D forwardRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.ZombieData.RayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.ZombieData.RayDistance, Color.red);
 
         if (forwardRaycastHit2D.collider != null)
         {
@@ -34,8 +34,8 @@ public class AttackState : IZombieState
         }
         else zombie.ChangeState(Zombie.RUNSTATE);
 
-        RaycastHit2D upRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(0f, zombie.Collider.size.y), Vector2.up, zombie.UpRayDistance);
-        Debug.DrawRay(zombie.Rigid.position + new Vector2(0f, zombie.Collider.size.y), Vector2.up * zombie.UpRayDistance, Color.red);
+        RaycastHit2D upRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(0f, zombie.Collider.size.y), Vector2.up, zombie.ZombieData.UpRayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(0f, zombie.Collider.size.y), Vector2.up * zombie.ZombieData.UpRayDistance, Color.red);
 
         if(upRaycastHit2D.collider != null)
         {

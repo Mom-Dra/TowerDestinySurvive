@@ -7,7 +7,7 @@ public class ClimbState : IZombieState
     public void Enter(Zombie zombie)
     {
         zombie.ZombieState = ZombieState.Climb;
-        zombie.Rigid.mass = zombie.ClimbMass;
+        zombie.Rigid.mass = zombie.ZombieData.ClimbMass;
     }
 
     public void Exit(Zombie zombie)
@@ -22,10 +22,10 @@ public class ClimbState : IZombieState
 
     public void FixedUpdate(Zombie zombie)
     {
-        zombie.Rigid.velocity = new Vector2(-zombie.ClimbSpeed.x, zombie.ClimbSpeed.y);
+        zombie.Rigid.velocity = new Vector2(-zombie.ZombieData.ClimbSpeed.x, zombie.ZombieData.ClimbSpeed.y);
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.RayDistance);
-        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.RayDistance, Color.red);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.ZombieData.RayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.ZombieData.RayDistance, Color.red);
 
         if (raycastHit2D.collider != null)
         {

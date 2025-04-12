@@ -23,10 +23,10 @@ public class RunState : IZombieState
 
     public void FixedUpdate(Zombie zombie)
     {
-        zombie.Rigid.velocity = new Vector2(-zombie.RunSpeed, zombie.Rigid.velocity.y);
+        zombie.Rigid.velocity = new Vector2(-zombie.ZombieData.RunSpeed, zombie.Rigid.velocity.y);
 
-        RaycastHit2D forwardRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.RayDistance);
-        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.RayDistance, Color.red);
+        RaycastHit2D forwardRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.ZombieData.RayDistance);
+        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.ZombieData.RayDistance, Color.red);
 
         if (forwardRaycastHit2D.collider != null)
         {
@@ -34,7 +34,7 @@ public class RunState : IZombieState
             {
                 if (forwardRaycastHit2D.transform.TryGetComponent<Zombie>(out Zombie hittedZombie))
                 {
-                    if (hittedZombie.RunSpeed <= zombie.RunSpeed)
+                    if (hittedZombie.ZombieData.RunSpeed <= zombie.ZombieData.RunSpeed)
                     {
                         zombie.ChangeState(Zombie.CLIMBSTATE);
                     }
@@ -43,7 +43,7 @@ public class RunState : IZombieState
             else if (forwardRaycastHit2D.transform.gameObject.layer == LayerMask.NameToLayer("Box"))
             {
                 zombie.ChangeState(Zombie.ATTACKSTATE);
-            } 
+            }
         }
         else Debug.Log("collider is null");
 

@@ -100,6 +100,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   rigid: {fileID: 0}
   zombieCollider: {fileID: 0}
+  zombieData: {fileID: 11400000, guid: b345b33bdce4e6d48bd3da4d24be5216, type: 2}
   runSpeed: 2
   climbSpeed: {x: 2, y: 2}
   rayDistance: 0.2

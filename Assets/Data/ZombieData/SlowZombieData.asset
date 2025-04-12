@@ -10,5 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cee4b529c3c3dc3469a138ea0bbb5a19, type: 3}
-  m_Name: ZombieData
+  m_Name: SlowZombieData
   m_EditorClassIdentifier: 
+  RunSpeed: 1
+  ClimbSpeed: {x: 1, y: 3}
+  RayDistance: 0.2
+  UpRayDistance: 0.4
+  DownRayDistance: 0.8
+  ClimbMass: 1
+  RunBackMass: 1000
