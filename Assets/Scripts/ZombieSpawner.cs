@@ -18,9 +18,6 @@ public class ZombieSpawner : MonoBehaviour
     private GameObject slowZombiePrefab;
 
     [SerializeField]
-    private Vector3 pos;
-
-    [SerializeField]
     [Range(1f, 5f)]
     private float minSpawnCool;
 
@@ -41,11 +38,11 @@ public class ZombieSpawner : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Instantiate(normalZombiePrefab, pos, Quaternion.identity);
+            Instantiate(normalZombiePrefab, poses[0], Quaternion.identity, rains[0]);
         }
         else if(Input.GetKeyDown(KeyCode.S))
         {
-            Instantiate(slowZombiePrefab, pos, Quaternion.identity);
+            Instantiate(slowZombiePrefab, poses[0], Quaternion.identity, rains[0]);
         }
     }
 
@@ -65,18 +62,18 @@ public class ZombieSpawner : MonoBehaviour
             switch(val)
             {
                 case 0:
-                    // normal Zombie
                     spawnPrefab = normalZombiePrefab;
                     break;
 
                 case 1:
-                    // slow Zombie
                     spawnPrefab = slowZombiePrefab;
                     break;
             }
 
             GameObject zombie = Instantiate(spawnPrefab, pos, Quaternion.identity, rain);
-            zombie.layer = zombieLayer;
+
+            Transform[] transforms = zombie.transform.GetComponentsInChildren<Transform>();
+            foreach (Transform transform in transforms) transform.gameObject.layer = zombieLayer;
 
             ++spawnCount;
 

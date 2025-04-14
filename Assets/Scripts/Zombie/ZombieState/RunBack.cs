@@ -24,7 +24,7 @@ public class RunBack : IZombieState
 
     public void FixedUpdate(Zombie zombie)
     {
-        zombie.Rigid.velocity = new Vector2(zombie.ZombieData.RunSpeed, zombie.Rigid.velocity.y);
+        zombie.Rigid.velocity = new Vector2(zombie.ZombieData.RunSpeed * 0.8f, zombie.Rigid.velocity.y);
 
         if (zombie.Rigid.position.x > zombie.RunBackTargetPosX) zombie.ChangeState(Zombie.RUNSTATE);
 
@@ -32,5 +32,20 @@ public class RunBack : IZombieState
         //Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.RayDistance, Color.red);
 
         //if (forwardRaycastHit2D.collider == null) zombie.ChangeState(Zombie.RUNSTATE);
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision, Zombie zombie)
+    {
+        
+    }
+
+    public void OnCollisionStay2D(Collision2D collision, Zombie zombie)
+    {
+
+    }
+
+    public void OnCollisionExit2D(Collision2D collision, Zombie zombie)
+    {
+
     }
 }

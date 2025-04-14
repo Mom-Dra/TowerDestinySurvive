@@ -24,4 +24,19 @@ public class DieState : IZombieState
     {
 
     }
+
+    public void OnCollisionEnter2D(Collision2D collision, Zombie zombie)
+    {
+
+    }
+
+    public void OnCollisionStay2D(Collision2D collision, Zombie zombie)
+    {
+
+    }
+
+    public void OnCollisionExit2D(Collision2D collision, Zombie zombie)
+    {
+
+    }
 }

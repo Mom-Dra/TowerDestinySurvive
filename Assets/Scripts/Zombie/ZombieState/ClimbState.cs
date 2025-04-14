@@ -23,19 +23,33 @@ public class ClimbState : IZombieState
     public void FixedUpdate(Zombie zombie)
     {
         zombie.Rigid.velocity = new Vector2(-zombie.ZombieData.ClimbSpeed.x, zombie.ZombieData.ClimbSpeed.y);
+    }
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.ZombieData.RayDistance);
-        Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.ZombieData.RayDistance, Color.red);
-
-        if (raycastHit2D.collider != null)
+    public void OnCollisionEnter2D(Collision2D collision, Zombie zombie)
+    {
+        if(collision.transform.gameObject.layer == LayerMask.NameToLayer("Box"))
         {
-            if (raycastHit2D.transform.gameObject.layer == LayerMask.NameToLayer("Box"))
-            {
-                zombie.ChangeState(Zombie.RUNSTATE);
-            }
+            zombie.ChangeState(Zombie.ATTACKSTATE);
         }
-        else
+    }
+
+    public void OnCollisionStay2D(Collision2D collision, Zombie zombie)
+    {
+        if (collision.transform.gameObject.layer == zombie.gameObject.layer)
         {
+            Zombie collisionZombie = collision.gameObject.GetComponent<Zombie>();
+
+            if (collisionZombie.transform.position.x < zombie.transform.position.x && collisionZombie.ZombieState == ZombieState.Climb)
+                zombie.ChangeState(Zombie.RUNSTATE);
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision, Zombie zombie)
+    {
+        if (collision.transform.gameObject.layer == zombie.gameObject.layer)
+        {
+            Zombie collisionZombie = collision.gameObject.GetComponent<Zombie>();
+
             zombie.ChangeState(Zombie.RUNSTATE);
         }
     }

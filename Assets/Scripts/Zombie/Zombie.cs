@@ -74,33 +74,12 @@ public class Zombie : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckGround();
-
         currState.FixedUpdate(this);
-    }
-
-    private void CheckGround()
-    {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(rigid.position + new Vector2(-0.2f, 0f), Vector2.down, zombieData.DownRayDistance, 1 << LayerMask.NameToLayer("Ground1"));
-        Debug.DrawRay(rigid.position + new Vector2(-0.2f, 0f), Vector2.down * zombieData.DownRayDistance, Color.red);
-
-        if (raycastHit2D.collider != null)
-        {
-            Debug.Log($"down Ray: {raycastHit2D.transform.name}");
-
-            isGround = true;
-            //if (raycastHit2D.transform.gameObject.layer == LayerMask.NameToLayer("Ground1"))
-            //{
-            //    IsGround = true;
-            //}
-            //else IsGround = false;
-        }
-        else isGround = false;
     }
 
     public void OnAttack()
     {
-        Debug.Log("OnAttack");
+
     }
 
     internal void ChangeState(IZombieState nextState)
@@ -112,8 +91,18 @@ public class Zombie : MonoBehaviour
         currState.Enter(this);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        currState.OnCollisionEnter2D(collision, this);
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log($"{collision.gameObject.name}");
+        currState.OnCollisionStay2D(collision, this);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        currState.OnCollisionExit2D(collision, this);
     }
 }

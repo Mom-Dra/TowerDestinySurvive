@@ -17,5 +17,5 @@ MonoBehaviour:
   RayDistance: 0.2
   UpRayDistance: 0.4
   DownRayDistance: 0.8
-  ClimbMass: 1
+  ClimbMass: 5
   RunBackMass: 1000
