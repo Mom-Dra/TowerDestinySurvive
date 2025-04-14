@@ -27,11 +27,6 @@ public class RunBack : IZombieState
         zombie.Rigid.velocity = new Vector2(zombie.ZombieData.RunSpeed * 0.8f, zombie.Rigid.velocity.y);
 
         if (zombie.Rigid.position.x > zombie.RunBackTargetPosX) zombie.ChangeState(Zombie.RUNSTATE);
-
-        //RaycastHit2D forwardRaycastHit2D = Physics2D.Raycast(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left, zombie.RayDistance);
-        //Debug.DrawRay(zombie.Rigid.position + new Vector2(-zombie.Collider.size.x + 0.1f, 0f), Vector2.left * zombie.RayDistance, Color.red);
-
-        //if (forwardRaycastHit2D.collider == null) zombie.ChangeState(Zombie.RUNSTATE);
     }
 
     public void OnCollisionEnter2D(Collision2D collision, Zombie zombie)
