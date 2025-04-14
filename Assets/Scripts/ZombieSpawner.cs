@@ -9,6 +9,9 @@ public class ZombieSpawner : MonoBehaviour
     private Transform[] rains;
 
     [SerializeField]
+    private Vector3[] poses;
+
+    [SerializeField]
     private GameObject normalZombiePrefab;
 
     [SerializeField]
@@ -30,8 +33,8 @@ public class ZombieSpawner : MonoBehaviour
 
     private void Start()
     {
-        foreach (Transform rain in rains)
-            StartCoroutine(SpawnZombie(rain));
+        for (int i = 0; i < rains.Length; ++i)
+            StartCoroutine(SpawnZombie(rains[i], poses[i], i + LayerMask.NameToLayer("Zombie1")));
     }
 
     private void Update()
@@ -46,7 +49,7 @@ public class ZombieSpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnZombie(Transform rain)
+    private IEnumerator SpawnZombie(Transform rain, Vector3 pos, int zombieLayer)
     {
         int spawnCount = 0;
 
@@ -72,7 +75,8 @@ public class ZombieSpawner : MonoBehaviour
                     break;
             }
 
-            Instantiate(spawnPrefab, pos, Quaternion.identity, rain);
+            GameObject zombie = Instantiate(spawnPrefab, pos, Quaternion.identity, rain);
+            zombie.layer = zombieLayer;
 
             ++spawnCount;
 

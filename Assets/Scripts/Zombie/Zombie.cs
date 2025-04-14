@@ -111,4 +111,9 @@ public class Zombie : MonoBehaviour
         currState = nextState;
         currState.Enter(this);
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log($"{collision.gameObject.name}");
+    }
 }
